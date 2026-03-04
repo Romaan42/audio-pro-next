@@ -53,7 +53,7 @@ export default async function page() {
                             </div>
                         </aside>
 
-                        <div className="flex-grow">
+                        <div className="grow">
                             <div className="flex justify-between items-center mb-8 bg-gray-50 p-4 rounded-lg">
                                 <span className="text-sm font-medium text-gray-600">Showing 12 of 48 products</span>
                                 <select className="bg-transparent font-bold text-sm focus:outline-none cursor-pointer">
