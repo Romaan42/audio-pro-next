@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { setOpen } from "./cartSidebar";
 
 export const getCartItems = createAsyncThunk(
   "get-cart-items",
@@ -26,6 +27,7 @@ export const addToCart = createAsyncThunk(
       const { data } = await axios.post("/api/add-to-cart", { id });
       if (data.success) {
         dispatch(getCartItems());
+        dispatch(setOpen());
       }
 
       return rejectWithValue(data.message);
