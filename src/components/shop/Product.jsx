@@ -1,11 +1,12 @@
 import React from 'react'
 import AddToCart from './AddToCart'
+import Image from 'next/image'
 
 export default function Product({ product }) {
     return (
         <div className="group relative">
             <div className="aspect-square bg-gray-100 rounded-2xl overflow-hidden relative">
-                <img src={product.images[0]} alt={product.title}
+                <Image width={371} height={371} quality={36} src={product.images[0]} alt={product.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
                 <AddToCart id={product._id} />
                 <span
