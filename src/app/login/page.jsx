@@ -1,8 +1,11 @@
 'use client'
+import { checkLogin } from '@/store/slices/checkLoginSlice';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export default function page() {
+    const dispatch = useDispatch()
     const router = useRouter()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -24,6 +27,7 @@ export default function page() {
             if (!res.ok) {
                 setError(data.message || 'Registration failed');
             } else {
+                dispatch(checkLogin())
                 router.push("/")
             }
         } catch (err) {

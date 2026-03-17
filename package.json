@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",
+    "axios": "^1.13.6",
     "bcrypt": "^6.0.0",
     "cloudinary": "^2.9.0",
     "jsonwebtoken": "^9.0.3",
