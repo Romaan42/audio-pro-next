@@ -26,7 +26,7 @@ export const GET = async () => {
         title: product.title,
         price: product.price,
         image: product.images[0],
-        qty: val.quantity,
+        qty: val.qty,
       };
     });
 

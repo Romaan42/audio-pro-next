@@ -1,13 +1,17 @@
 import React from 'react'
 import AddToCart from './AddToCart'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Product({ product }) {
     return (
         <div className="group relative">
             <div className="aspect-square bg-gray-100 rounded-2xl overflow-hidden relative">
-                <Image width={371} height={371} src={product.images[0]} alt={product.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                <Link href={`/product/${product._id}`}>
+                    <Image width={371} height={371} src={product.images[0]} alt={product.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                </Link>
+
                 <AddToCart id={product._id} />
                 <span
                     className="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-xs font-bold shadow-sm italic">Bestseller</span>

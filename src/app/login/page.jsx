@@ -1,4 +1,5 @@
 'use client'
+import { getCartItems } from '@/store/slices/cartItemsSlice';
 import { checkLogin } from '@/store/slices/checkLoginSlice';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -28,6 +29,7 @@ export default function page() {
                 setError(data.message || 'Registration failed');
             } else {
                 dispatch(checkLogin())
+                dispatch(getCartItems())
                 router.push("/")
             }
         } catch (err) {

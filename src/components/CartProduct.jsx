@@ -11,7 +11,7 @@ export default function CartProduct() {
         dispatch(removeFromCart({ id }));
     };
 
-    if (loading) return <CartLoader />;
+    if (loading || !items) return <CartLoader />;
     if (items && items.length === 0) return <h1>items list is empty</h1>;
 
     return (
