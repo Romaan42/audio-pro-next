@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import RelatedProducts from "./RelatedProducts";
+import Reviews from "@/components/Product/Reviews";
 
 export default async function ProductDetail({ params }) {
     const { id } = await params;
@@ -66,7 +67,7 @@ export default async function ProductDetail({ params }) {
                     </div>
                 </div>
             </div>
-
+            <Reviews productId={id} reviews={product.reviews} />
             {/* Related Products */}
             <div className="mt-20">
                 <h2 className="text-2xl font-bold mb-6">Related Products</h2>
