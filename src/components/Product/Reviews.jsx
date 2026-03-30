@@ -1,25 +1,47 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 
-const ReviewsSystem = ({ productId, reviews }) => {
-
-    const [newReview, setNewReview] = useState({ name: "", rating: 5, comment: "" });
+const ReviewsSystem = ({ productId }) => {
+    const [name, setName] = useState("");
+    const [rating, setRating] = useState(5);
+    const [comment, setComment] = useState("");
     const [hover, setHover] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [reviews, setReviews] = useState([]);
+
+    const fetchReviews = async () => {
+        setLoading(true);
+        const res = await fetch(`/api/product/${productId}`);
+        const data = await res.json();
+        setReviews(data.product.reviews);
+        setLoading(false);
+    }
+
+    useEffect(() => {
+        fetchReviews();
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!newReview.name || !newReview.comment) return alert("Please fill out all fields!");
+        setLoading(true);
+        if (!name || !comment) return alert("Please fill out all fields!");
 
         // setReviews([reviewToAdd, ...reviews]);
         const res = await fetch("/api/put-review", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ productId, ...newReview }),
+            body: JSON.stringify({ productId, name, rating, comment }),
         });
         const data = await res.json();
-        console.log(data)
-        setNewReview({ name: "", rating: 5, comment: "" }); // Reset form
+        if (data.success) {
+            alert("Review added successfully!");
+            fetchReviews(); // Refresh reviews list
+        }
+        setName("");
+        setRating(5);
+        setComment("");
+        setLoading(false);
     };
 
     // Star Component for reuse
@@ -38,11 +60,21 @@ const ReviewsSystem = ({ productId, reviews }) => {
         </svg>
     );
 
+
     return (
         <div className="max-w-5xl mx-auto my-12 grid grid-cols-1 lg:grid-cols-3 gap-8 px-4">
 
             {/* --- LEFT COLUMN: ADD REVIEW FORM --- */}
+            {loading && (
+                <div className="absolute inset-0 bg-white/75 flex items-center justify-center z-10">
+                    <svg className="animate-spin h-8 w-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </div>
+            )}
             <div className="lg:col-span-1">
+
                 <form
                     onSubmit={handleSubmit}
                     className="sticky top-8 bg-white p-6 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100"
@@ -58,11 +90,11 @@ const ReviewsSystem = ({ productId, reviews }) => {
                                 {[1, 2, 3, 4, 5].map((star) => (
                                     <StarIcon
                                         key={star}
-                                        className={`w-7 h-7 ${(hover || newReview.rating) >= star ? "text-amber-400" : "text-slate-200"}`}
-                                        fill={(hover || newReview.rating) >= star}
+                                        className={`w-7 h-7 ${(hover || rating) >= star ? "text-amber-400" : "text-slate-200"}`}
+                                        fill={(hover || rating) >= star}
                                         onMouseEnter={() => setHover(star)}
                                         onMouseLeave={() => setHover(0)}
-                                        onClick={() => setNewReview({ ...newReview, rating: star })}
+                                        onClick={() => setRating(star)}
                                     />
                                 ))}
                             </div>
@@ -75,8 +107,8 @@ const ReviewsSystem = ({ productId, reviews }) => {
                                 type="text"
                                 placeholder="e.g. Alex Rivera"
                                 className="w-full px-4 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
-                                value={newReview.name}
-                                onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                             />
                         </div>
 
@@ -87,8 +119,8 @@ const ReviewsSystem = ({ productId, reviews }) => {
                                 rows="4"
                                 placeholder="What did you think of the quality?"
                                 className="w-full px-4 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all resize-none"
-                                value={newReview.comment}
-                                onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
                             ></textarea>
                         </div>
 
@@ -116,7 +148,7 @@ const ReviewsSystem = ({ productId, reviews }) => {
                         <p className="text-slate-400 font-medium">No reviews yet. Be the first!</p>
                     </div>
                 ) : (
-                    reviews?.map((review, i) => {
+                    reviews.map((review, i) => {
                         const date = new Date(review.createdAt);
                         review.createdAt = date.toLocaleDateString("en-US", {
                             year: "numeric",
@@ -132,7 +164,7 @@ const ReviewsSystem = ({ productId, reviews }) => {
                                 <div className="flex justify-between items-start mb-3">
                                     <div className="flex items-center gap-3">
                                         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-md">
-                                            {review.name}
+                                            {review.name.charAt(0).toUpperCase()}
                                         </div>
                                         <div>
                                             <h4 className="font-bold text-slate-800 tracking-tight">{review.name}</h4>

@@ -67,7 +67,7 @@ export default async function ProductDetail({ params }) {
                     </div>
                 </div>
             </div>
-            <Reviews productId={id} reviews={product.reviews} />
+            <Reviews productId={id} />
             {/* Related Products */}
             <div className="mt-20">
                 <h2 className="text-2xl font-bold mb-6">Related Products</h2>

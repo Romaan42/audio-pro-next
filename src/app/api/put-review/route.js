@@ -1,3 +1,4 @@
+import checkUserLogin from "@/lib/checkLoginUser";
 import connectDb from "@/lib/connectDb";
 import Product from "@/models/productModel";
 
@@ -5,6 +6,7 @@ export const POST = async (request) => {
   try {
     await connectDb();
     const { productId, name, rating, comment } = await request.json();
+
     const product = await Product.findById(productId);
     if (!product) {
       return Response.json(
@@ -21,7 +23,10 @@ export const POST = async (request) => {
 
     await product.save();
 
-    return Response.json({ message: "Review added successfully" });
+    return Response.json({
+      success: true,
+      message: "Review added successfully",
+    });
   } catch (error) {
     console.error("Error adding review:", error);
     return Response.json({ message: "Failed to add review" }, { status: 500 });
