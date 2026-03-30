@@ -6,7 +6,9 @@ import Reviews from "@/components/Product/Reviews";
 export default async function ProductDetail({ params }) {
     const { id } = await params;
 
-    const result = await fetch(`${process.env.BASE_URL}/api/product/${id}`)
+    const result = await fetch(`${process.env.BASE_URL}/api/product/${id}`, {
+        cache: "no-store",
+    })
     const { product } = await result.json()
 
 
