@@ -1,14 +1,14 @@
-import React from "react";
 
 export default function AdminDashboard() {
+
     return (
         <div className="flex-1">
             {/* Header */}
             <header className="bg-white shadow p-4 flex justify-between items-center">
                 <h1 className="text-xl font-semibold">Dashboard</h1>
-                <button className="bg-blue-500 text-white px-4 py-2 rounded">
+                {/* <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleLogout}>
                     Logout
-                </button>
+                </button> */}
             </header>
 
             {/* Content */}

@@ -43,3 +43,9 @@ export const adminLogin = async (_, formData) => {
     return { success: false, error: "Invalid email or password" };
   }
 };
+
+export const adminLogout = async () => {
+  const cookiesStore = await cookies();
+  cookiesStore.delete("adminToken");
+  return { success: true, message: "Admin logout successful" };
+};
