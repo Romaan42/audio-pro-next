@@ -20,7 +20,7 @@ export default function CheckoutSuccessCard({ success }) {
                     <p className="text-sm text-gray-500">Order ID</p>
                     <p className="font-medium text-gray-800">#{success.orderId}</p>
                 </div>
-                <button className="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg transition" onClick={() => router.push('/products')}>
+                <button className="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg transition" onClick={() => router.push('/shop')}>
                     Continue Shopping
                 </button>
             </div>

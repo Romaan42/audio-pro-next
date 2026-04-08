@@ -3,6 +3,11 @@ import mongoose from "mongoose";
 const checkoutSchems = new mongoose.Schema(
   {
     userId: { type: mongoose.Schema.ObjectId },
+    name: String,
+    email: String,
+    phone: String,
+    city: String,
+    paymentMethod: { type: String, default: "Cash on Delivery" },
     items: [
       {
         _id: { type: mongoose.Schema.ObjectId },

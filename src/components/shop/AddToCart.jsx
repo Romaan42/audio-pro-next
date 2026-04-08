@@ -1,12 +1,18 @@
 'use client'
 
 import { addToCart, getCartItems } from "@/store/slices/cartItemsSlice"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 export default function AddToCart({ id }) {
     const dispatch = useDispatch()
 
+    const { user } = useSelector((state) => state.user)
+
     const handleAddToCart = () => {
+        if (!user) {
+            alert("Please log in to add items to your cart.")
+            return
+        }
         dispatch(addToCart({ id }))
     }
     return (
