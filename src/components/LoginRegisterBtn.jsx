@@ -1,61 +1,92 @@
+'use client'
 import { useDispatch, useSelector } from "react-redux";
 import { checkLogin } from "@/store/slices/checkLoginSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { logoutUser } from "@/actions/userActions";
+import { FaUserCircle } from "react-icons/fa";
 
 export default function LoginRegisterBtn() {
     const dispatch = useDispatch();
-
     const { user, loading } = useSelector((state) => state.user);
+
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         dispatch(checkLogin());
     }, []);
 
     const handleLogout = async () => {
-        const result = await logoutUser()
+        const result = await logoutUser();
         if (result.success) {
-            dispatch(checkLogin())
+            dispatch(checkLogin());
+            setOpen(false);
         }
+    };
+
+    if (loading) {
+        return (
+            <button className="bg-indigo-600 text-white px-4 py-2 rounded-full">
+                Loading...
+            </button>
+        );
     }
 
-    if (!user && loading) return <button className="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition">loading..</button>
-
-
     return (
-        <>
-            {user ? (
-                <div className="group relative">
-                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition">
-                        {user?.name}
+        <div className="relative">
 
-                    </button>
-                    <ul className="ml-6 hidden group-hover:block absolute">
-                        <li className="cursor-pointer p-2 rounded-2xl text-white bg-red-500" onClick={handleLogout}>
-                            Logout
-                        </li>
-                    </ul>
-                </div>
+            {/* Main Button */}
+            <button
+                onClick={() => setOpen(!open)}
+                className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition"
+            >
+                <FaUserCircle size={18} />
+                {user ? user.name : "Account"}
+            </button>
 
+            {/* Dropdown */}
+            {open && (
+                <div className="absolute right-0 mt-2 w-44 bg-white shadow-lg rounded-xl border overflow-hidden z-50">
 
-            ) : (
-                <div className="hidden md:flex items-center gap-3">
-                    <Link
-                        href="/login"
-                        className="text-gray-600 hover:text-indigo-600 font-medium"
-                    >
-                        Login
-                    </Link>
+                    {user ? (
+                        <>
+                            <Link
+                                href="/orders"
+                                className="block px-4 py-2 hover:bg-gray-100"
+                                onClick={() => setOpen(false)}
+                            >
+                                My Orders
+                            </Link>
 
-                    <Link
-                        href="/register"
-                        className="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition"
-                    >
-                        Register
-                    </Link>
+                            <button
+                                onClick={handleLogout}
+                                className="w-full text-left px-4 py-2 hover:bg-red-50 text-red-500"
+                            >
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <Link
+                                href="/login"
+                                className="block px-4 py-2 hover:bg-gray-100"
+                                onClick={() => setOpen(false)}
+                            >
+                                Login
+                            </Link>
+
+                            <Link
+                                href="/register"
+                                className="block px-4 py-2 hover:bg-gray-100"
+                                onClick={() => setOpen(false)}
+                            >
+                                Register
+                            </Link>
+                        </>
+                    )}
+
                 </div>
             )}
-        </>
+        </div>
     );
 }
