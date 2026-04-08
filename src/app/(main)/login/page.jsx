@@ -3,6 +3,7 @@ import { getCartItems } from '@/store/slices/cartItemsSlice';
 import { checkLogin } from '@/store/slices/checkLoginSlice';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 
 export default function page() {
@@ -12,6 +13,8 @@ export default function page() {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState(null);
     const [error, setError] = useState(null);
+
+    const [showPass, setShowPass] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -55,15 +58,18 @@ export default function page() {
                         required
                     />
                 </label>
-                <label>
+                <label className='relative'>
                     Password
                     <input
-                        type="password"
+                        type={showPass ? "text" : "password"}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className="w-full border-gray-300 border px-2 py-1"
                         required
                     />
+                    {showPass ?
+                        <FaRegEye onClick={() => setShowPass(false)} className='absolute top-10 right-2 -translate-y-1/2 cursor-pointer' /> :
+                        <FaRegEyeSlash onClick={() => setShowPass(true)} className='absolute top-10 right-2 -translate-y-1/2 cursor-pointer' />}
                 </label>
                 <button
                     type="submit"

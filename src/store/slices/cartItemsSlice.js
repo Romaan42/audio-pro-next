@@ -55,7 +55,7 @@ export const removeFromCart = createAsyncThunk(
 
 const cartSlice = createSlice({
   name: "cart",
-  initialState: { items: null, loading: true },
+  initialState: { items: null, loading: true, error: null },
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -77,8 +77,9 @@ const cartSlice = createSlice({
         state.loading = false;
         state.items = action.payload;
       })
-      .addCase(getCartItems.rejected, (state) => {
+      .addCase(getCartItems.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.payload;
       });
   },
 });

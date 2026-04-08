@@ -1,4 +1,5 @@
 import React from 'react'
+import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa'
 
 export default function Footer() {
     return (
@@ -32,13 +33,13 @@ export default function Footer() {
                     <div className="flex gap-4">
                         <div
                             className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition cursor-pointer">
-                            IG</div>
+                            <FaInstagram /></div>
                         <div
                             className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition cursor-pointer">
-                            TW</div>
+                            <FaTwitter /></div>
                         <div
                             className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition cursor-pointer">
-                            FB</div>
+                            <FaFacebook /></div>
                     </div>
                 </div>
             </div>

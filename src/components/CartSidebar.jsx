@@ -3,12 +3,18 @@
 import { setClose } from "@/store/slices/cartSidebar"
 import { useDispatch, useSelector } from "react-redux"
 import CartProduct from "./CartProduct"
+import { useRouter } from "next/navigation"
 
 
 export default function CartSidebar() {
+    const router = useRouter()
     const dispatch = useDispatch()
     const isOpen = useSelector(state => state.cartSidebar)
+    const { items } = useSelector(state => state.cart)
 
+    const totalPrice = items?.reduce((i, val) => {
+        return i + val.price * val.qty;
+    }, 0)
     return (
         <div>
             {/* Overlay */}
@@ -35,9 +41,13 @@ export default function CartSidebar() {
                 <div className="p-4 border-t">
                     <div className="flex justify-between mb-4">
                         <span className="font-medium">Subtotal</span>
-                        <span className="font-semibold">$19.99</span>
+                        <span className="font-semibold">${totalPrice?.toFixed(2)}</span>
                     </div>
-                    <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+                    <button onClick={() => {
+                        router.push("/checkout")
+                        dispatch(setClose())
+                    }
+                    } className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
                         Checkout
                     </button>
                 </div>

@@ -42,7 +42,9 @@ export const POST = async (request) => {
       process.env.JWT_SECRET,
     );
 
-    webCookies.set("userToken", token);
+    webCookies.set("userToken", token, {
+      maxAge: 2 * 24 * 60 * 60 * 1000,
+    });
 
     return Response.json({ success: true, message: "login successful" });
   } catch (error) {

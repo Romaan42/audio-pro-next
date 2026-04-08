@@ -3,17 +3,17 @@
 import { useState } from "react"
 
 export default function ShopSidebar() {
-    const [range, setRange] = useState()
+    const [range, setRange] = useState(10)
 
     const handlePriceChange = (e) => {
         const priceValue = e.target.value;
 
-        if (priceValue > 10) {
+        if (priceValue % 10 === 0) {
             setRange(priceValue)
         }
     }
 
-    console.log(range)
+
     return (
         <aside className="w-full lg:w-64 space-y-8">
             <div>
@@ -38,12 +38,12 @@ export default function ShopSidebar() {
                 <h3 className="font-bold text-lg mb-4">Price Range</h3>
                 <div className="space-y-4">
                     <input type="range" min={10} max={300}
-                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" onChange={handlePriceChange} />
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" value={range} onChange={handlePriceChange} />
                     <div className="flex justify-between text-sm text-gray-500 font-medium"
 
                     >
-                        <span>$0</span>
-                        <span>$1,000+</span>
+                        <span>${range}</span>
+                        <span>$300+</span>
                     </div>
                 </div>
             </div>

@@ -7,6 +7,7 @@ export const GET = async () => {
     const products = await Product.find();
     return Response.json(products, { status: 200 });
   } catch (error) {
+    console.log(error);
     return Response.json(
       { error: "Failed to fetch products" },
       { status: 500 },

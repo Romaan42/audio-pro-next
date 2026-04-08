@@ -2,15 +2,19 @@ import { removeFromCart } from "@/store/slices/cartItemsSlice";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import CartLoader from "./CartLoader";
+import Link from "next/link";
+import { setClose } from "@/store/slices/cartSidebar";
 
 export default function CartProduct() {
     const dispatch = useDispatch();
     const { items, loading } = useSelector((state) => state.cart);
+    const isUser = useSelector((state) => state.user);
 
     const handleRemoveFromCart = (id) => {
         dispatch(removeFromCart({ id }));
     };
 
+    if (!isUser.user && !isUser.loading) return <h1 className="text-center text-gray-500">Please <Link className="text-blue-500 hover:underline" href={"/login"} onClick={() => dispatch(setClose())}>Login</Link> to view your cart items.</h1>
     if (loading || !items) return <CartLoader />;
     if (items && items.length === 0) return <h1>items list is empty</h1>;
 

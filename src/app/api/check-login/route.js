@@ -16,6 +16,7 @@ export const GET = async () => {
 
     return Response.json({ success: true, user });
   } catch (error) {
+    console.log(error);
     return Response.json(
       { success: false, message: "server error" },
       { status: 500 },

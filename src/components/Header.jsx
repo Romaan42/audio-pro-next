@@ -42,9 +42,8 @@ export default function Header() {
                         <div className="hidden md:flex space-x-8 font-medium text-gray-600">
                             <Link href="/" className="hover:text-indigo-600 transition">Home</Link>
                             <Link href="/shop" className="hover:text-indigo-600 transition">Shop All</Link>
-                            <Link href="/headphones" className="hover:text-indigo-600 transition">Headphones</Link>
-                            <Link href="/speakers" className="hover:text-indigo-600 transition">Speakers</Link>
-                            <Link href="/sale" className="hover:text-indigo-600 transition">Sale</Link>
+                            <Link href="/contact" className="hover:text-indigo-600 transition">Contact</Link>
+                            <Link href="/orders" className="hover:text-indigo-600 transition">Orders</Link>
                         </div>
 
                         {/* Right Section */}
