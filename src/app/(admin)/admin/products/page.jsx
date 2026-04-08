@@ -2,7 +2,7 @@ import AdminProduct from '@/components/admin/AdminProduct'
 import React from 'react'
 
 export default async function page() {
-    const res = await fetch('http://localhost:3000/api/products', {
+    const res = await fetch(`${process.env.BASE_URL}/api/products`, {
         cache: 'no-store'
     })
     const products = await res.json()
